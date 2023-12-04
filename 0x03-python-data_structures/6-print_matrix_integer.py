@@ -1,6 +1,9 @@
 #!/usr/bin/python3
-def multiple_returns(sentence):
-    slen = len(sentence)
-    if slen > 0:
-        return (slen, sentence[0])
-    return (0, None)
+def print_matrix_integer(matrix=[[]]):
+    if matrix == [[]]:
+        print()
+    else:
+        for row in matrix:
+            for column in row:
+                print('{:d}'.format(column), end=' '
+                      if column != row[-1] else '\n')

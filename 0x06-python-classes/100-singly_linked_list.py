@@ -1,101 +1,78 @@
 #!/usr/bin/python3
-"""Node  class definintion """
+"""creates class Node to define linked list node & class SinglyLinkedList"""
 
 
 class Node:
-    """ Node  class defined
-        Attributes:
-            size (int): data of node
-    """
+    """defines class for singly linked list node"""
+
     def __init__(self, data, next_node=None):
-        """initializes
-        Args:
-            data (int): data
-            next_node: next_node
-        Returns:
-            None
-        """
         self.data = data
-        self.next_node = None
+        self.next_node = next_node
 
     @property
     def data(self):
-        """
-        getter of data
-        Return:
-            data
-        """
-        return self.__data
+        """ getter for data attribute"""
+        return(self.__data)
 
     @data.setter
     def data(self, value):
-        """
-        Setter of data
-        Args:
-            value (int): data
-        Raises
-            TypeError: if data is not int
-        Returns:
-            None
-        """
+        """setter for data attribute"""
         if type(value) is not int:
             raise TypeError("data must be an integer")
         else:
             self.__data = value
 
-    
     @property
     def next_node(self):
-        """
-        getter of node
-        Return:
-            node
-        """
-        return self.__next_node
+        """ getter for next_node attribute"""
+        return(self.__next_node)
 
-      
     @next_node.setter
     def next_node(self, value):
-        """
-        Setter of next_node
-        Args:
-            value (int): next_node
-        Raises
-            TypeError: if data is not int
-        Returns:
-            None
-        """
-        if not isinstance(value, Node) and value != None:
+        """setter for next_node attribute"""
+        if value is not None and not isinstance(value, Node):
             raise TypeError("next_node must be a Node object")
         else:
             self.__next_node = value
 
+
 class SinglyLinkedList:
-     """
-    SinglyLinkedList class
-    Attributes:
-        head (Node): a pointer to the singly linked list
-    """
+    """defines class for singly linked list"""
+
     def __init__(self):
-         """
-        Class initializer
-        """
         self.__head = None
 
     def sorted_insert(self, value):
-        """
-        Inserts new Node
-        """
+        """insert new node"""
+        new_node = Node(value)
         if self.__head is None:
-            self.__head = Node(value)
+            self.__head = new_node
         else:
-            new_node = Node(value)
             tmp = self.__head
-            while tmp is not None:
-                if tmp.__next_node is None:
-                    tmp.__next_node = new_node
-                    new_node.__next_node = None
-                if new_node.__data < tmp.__next_node.__data:
-                    new_node.__next_node = tmp.__next_node
-                    tmp.__next_node = new_node
-                tmp = tmp.__next_node
+            if tmp.data > new_node.data:
+                new_node.next_node = tmp
+                self.__head = new_node
+                return
+            while tmp.next_node is not None:
+                tmp2 = tmp.next_node
+                if tmp2.data < new_node.data:
+                    tmp = tmp2
+                else:
+                    new_node.next_node = tmp.next_node
+                    tmp.next_node = new_node
+                    return
+            tmp.next_node = new_node
+
+    def stringrep(self):
+        strrep = ""
+        tmp = self.__head
+        while tmp is not None:
+            datavalue = tmp.data
+            strrep = strrep + str(datavalue)
+            tmp = tmp.next_node
+            if tmp:
+                strrep = strrep + "\n"
+        return strrep
+
+    def __repr__(self):
+        return(self.stringrep())

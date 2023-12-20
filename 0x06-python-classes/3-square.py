@@ -1,12 +1,22 @@
 #!/usr/bin/python3
-class Square:
-    """Simple square class with his size as a field"""
+"""Defines a class Square"""
 
+
+class Square:
+    """
+    Class that defines properties of square by: (based on 2-square.py).
+
+    Attributes:
+        size: size of a square (1 side).
+    """
     def __init__(self, size=0):
-        """ Instance the class Square
-            Arguments:
-                @size: the size of every side of the Square,
-                        it must be a positive integer value"""
+        """Creates new instances of square.
+
+        Args:
+            size: size of the square (1 side).
+        """
+        self.__size = size
+
         if not isinstance(size, int):
             raise TypeError("size must be an integer")
         elif size < 0:
@@ -15,10 +25,8 @@ class Square:
             self.__size = size
 
     def area(self):
-        """ Compute the area of a square
-            with the formula:
-                                area = @size ^ 2 = @size * @size
-            Return:
-                    Power of the Square size to 2
-                    or size multiplicated by size."""
-        return (self.__size ** 2)
+        """Calculates the area of square.
+
+        Returns: the current square area.
+        """
+        return self.__size ** 2

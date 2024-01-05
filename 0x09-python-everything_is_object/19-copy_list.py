@@ -1,7 +1,3 @@
 #!/usr/bin/python3
-def copy_list(l):
-    """
-     Return a shallow copy of the input list using slicing
-     """
-    new = l[:]
-    return new
+def copy_list(list_):
+    return list_[:]

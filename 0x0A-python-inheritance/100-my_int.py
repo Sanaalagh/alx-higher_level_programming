@@ -1,16 +1,21 @@
 #!/usr/bin/python3
 """
-class module
+   100-my_int module
+   Class MyInt that inherits from int:
+   MyInt is a rebel. MyInt has == and != operators inverted
 """
 
 
 class MyInt(int):
-    """class with int object"""
+    """Class MyInt that inherits from int"""
+    def __eq__(self, num):
+        """Equal"""
+        if (self.real == num):
+            return False
+        return True
 
-    def __ee__(self, other):
-        """equal equal method"""
-        return super().__ee__(other)
-
-    def __ne__(self, other):
-        """not equal method"""
-        return super().__ne__(other)
+    def __ne__(self, num):
+        "No equal"
+        if(self.real != num):
+            return False
+        return True

@@ -1,11 +1,19 @@
 #!/usr/bin/python3
+"""
+Reads log data from stdin and computes metrics,
+printing them every 10 lines or upon keyboard interruption
+"""
+
+
 import sys
+
 
 def print_stats(total_size, status_codes):
     """Print statistics."""
     print("File size: {}".format(total_size))
     for code in sorted(status_codes):
         print("{}: {}".format(code, status_codes[code]))
+
 
 def parse_line(line, total_size, status_codes):
     """Parse a log line and update statistics."""
@@ -26,6 +34,7 @@ def parse_line(line, total_size, status_codes):
 
     return total_size, status_codes
 
+
 def main():
     """Main function."""
     total_size = 0
@@ -34,7 +43,8 @@ def main():
 
     try:
         for line in sys.stdin:
-            total_size, status_codes = parse_line(line, total_size, status_codes)
+            total_size, status_codes = parse_line
+            (line, total_size, status_codes)
             line_count += 1
 
             if line_count % 10 == 0:
@@ -43,6 +53,6 @@ def main():
     except KeyboardInterrupt:
         print_stats(total_size, status_codes)
 
+
 if __name__ == "__main__":
     main()
-

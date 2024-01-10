@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+"""
+Generates Pascal's Triangle up to a specified level
+"""
+
+
 def pascal_triangle(n):
     """ Pascal Triangle 1h"""
     li = []

@@ -1,6 +1,23 @@
 #!/usr/bin/python3
-def append_write(filename="", text=""):
-    """ function that appends a string returns the number of characters """
+"""
+Returns the JSON representation of an object (string)
+"""
 
-    with open(filename, "a", encoding='utf-8') as f:
-        return f.write(text)
+
+import json
+
+
+def to_json_string(my_obj):
+    """
+    Args:
+        my_obj: Python object to be converted to JSON string
+    Returns:
+        JSON representation of the object
+    """
+    return json.dumps(my_obj)
+
+
+if __name__ == "__main__":
+    my_list = [1, 2, 3]
+    s_my_list = to_json_string(my_list)
+    print(s_my_list)

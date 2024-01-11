@@ -1,17 +1,20 @@
 #!/usr/bin/python3
-"""Module containing the function class_to_json"""
+"""
+Save Module
+"""
+import json
 
 
-def class_to_json(obj):
-    """Returns the dictionary description with simple data structure,
-    (list, dictionary, string, integer and boolean) for JSON serialization,
-    of an object.
-
-    Args:
-        obj (MyClass): object.
-
-    Returns:
-        dict: dictionary.
+def save_to_json_file(my_obj, filename):
+    """write an object to a text file
+    args:
+        my_obj: object to manipulate
+    filename:
+        filename: text file
+    return:
+        object
     """
-    # print("type of obj --> {}".format(type(obj)))
-    return obj.__dict__
+
+    with open(filename, "w", encoding="utf-8") as f:
+        written = json.dump(my_obj, f)
+    return written

@@ -11,4 +11,4 @@ if __name__ == "__main__":
     print(dictionary)
     print(type(dictionary))
     print(json_dictionary)
-    print(type(json_dictionary)
+    print(type(json_dictionary))

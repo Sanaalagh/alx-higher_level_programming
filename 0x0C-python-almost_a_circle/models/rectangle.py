@@ -56,7 +56,7 @@ class Rectangle(Base):
 
     def validate_integer(self, name, value, eq=True):
         '''A method for validating the value.'''
-        if type(value) != int:
+        if type(value) is not int:
             raise TypeError("{} must be an integer".format(name))
         if eq and value < 0:
             raise ValueError("{} must be >= 0".format(name))
@@ -80,7 +80,7 @@ class Rectangle(Base):
                    self.height)
 
     def __update(self, id=None, width=None, height=None, x=None, y=None):
-        '''The internal method wich updates instance attributes via */**args.'''
+        '''The internal method updates instance attributes via */**args.'''
         if id is not None:
             self.id = id
         if width is not None:

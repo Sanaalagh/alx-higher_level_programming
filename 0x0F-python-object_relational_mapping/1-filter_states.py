@@ -3,35 +3,29 @@
 A script that lists all states with a name starting with N (upper N)
 from the database hbtn_0e_0_usa.
 """
-
-import sys
-import MySQLdb
-
 if __name__ == "__main__":
-    # Connect to MySQL database
-    db = MySQLdb.connect(host="localhost",
-                         user=sys.argv[1],
-                         passwd=sys.argv[2],
-                         db=sys.argv[3],
-                         port=3306)
-    # Create a cursor object using cursor() method
-    cursor = db.cursor()
+    from sys import argv
+    import MySQLdb
 
-    # Construct SQL query to select states starting with 'N'
-    sql_query = "SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC"
+    # connect
+    db = MySQLdb.connect(host='localhost',
+                         port=3306,
+                         user=argv[1],
+                         passwd=argv[2],
+                         db=argv[3])
 
-    # Execute the SQL command
-    cursor.execute(sql_query)
+    # cursor
+    c = db.cursor()
 
-    # Fetch all the rows in a list of tuples
-    results = cursor.fetchall()
+    # execute query
+    c.execute("SELECT * FROM states WHERE\
+    name LIKE BINARY 'N%' ORDER BY states.id")
 
-    # Print results
-    for row in results:
+    # fetch and print
+    rows = c.fetchall()
+    for row in rows:
         print(row)
 
-    # Close the cursor
-    cursor.close()
-
-    # Close the database connection
+    # close cursor and database
+    c.close()
     db.close()

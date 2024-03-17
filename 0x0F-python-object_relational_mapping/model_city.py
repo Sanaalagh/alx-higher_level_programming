@@ -1,17 +1,16 @@
+#!/usr/bin/python3
+"""Defines the City model."""
 from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
-from model_state import Base
+from sqlalchemy.ext.declarative import declarative_base
+from model_state import Base, State
+
+Base = declarative_base()
+
 
 class City(Base):
-    """Class representing the City table."""
+    """Represents a city for a MySQL database."""
 
     __tablename__ = 'cities'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
     name = Column(String(128), nullable=False)
     state_id = Column(Integer, ForeignKey('states.id'), nullable=False)
-    state = relationship("State", back_populates="cities")
-
-    def __repr__(self):
-        """Return string representation of the City object."""
-        return "<City(id={}, name='{}', state_id={})>".format(
-            self.id, self.name, self.state_id)

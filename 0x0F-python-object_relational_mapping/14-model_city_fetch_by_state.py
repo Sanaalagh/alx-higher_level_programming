@@ -1,33 +1,32 @@
 #!/usr/bin/python3
 """
-A script that prints all City objects from the database hbtn_0e_14_usa.
+A script that lists all City objects from the database hbtn_0e_14_usa.
 """
+import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from model_state import Base, State
-from model_city import City
-from sys import argv
+from model_state import Base, State  # Import Base and State
+from model_city import City  # Import City
 
 if __name__ == "__main__":
-    # Create a connection to the database
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'
-                           .format(argv[1], argv[2], argv[3]), pool_pre_ping=True)
-    
-    # Create all tables in the engine
-    Base.metadata.create_all(engine)
+    # Create an engine that connects to the given database URL
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.
+                           format(sys.argv[1], sys.argv[2], sys.argv[3]),
+                           pool_pre_ping=True)
 
-    # Create a configured "Session" class
-    Session = sessionmaker(bind=engine)
+    # Bind the engine to the metadata of the Base class so that the
+    # declaratives can be accessed through a DBSession instance
+    Base.metadata.bind = engine
 
-    # Create a Session
-    session = Session()
+    DBSession = sessionmaker(bind=engine)
+    # Create a session
+    session = DBSession()
 
-    # Query the database for all cities and states, sorted by city id
-    cities = session.query(City).order_by(City.id).all()
+    # Query all cities joined with their states, ordered by city.id
+    cities = session.query(City, State).join(State).order_by(City.id).all()
 
-    # Print results
-    for city in cities:
-        print("{}: ({}) {}".format(city.state.name, city.id, city.name))
+    # Iterate and print city and state data
+    for city, state in cities:
+        print("{}: ({}) {}".format(state.name, city.id, city.name))
 
-    # Close the session
     session.close()

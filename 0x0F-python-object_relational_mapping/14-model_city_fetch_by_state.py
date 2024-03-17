@@ -2,31 +2,27 @@
 """
 A script that lists all City objects from the database hbtn_0e_14_usa.
 """
-import sys
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from model_state import Base, State  # Import Base and State
-from model_city import City  # Import City
-
 if __name__ == "__main__":
-    # Create an engine that connects to the given database URL
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.
-                           format(sys.argv[1], sys.argv[2], sys.argv[3]),
-                           pool_pre_ping=True)
+    from sqlalchemy.engine import create_engine
+    from sqlalchemy.engine.url import URL
+    from sqlalchemy.orm import Session
+    from model_state import Base, State
+    from model_city import City
+    from sys import argv
 
-    # Bind the engine to the metadata of the Base class so that the
-    # declaratives can be accessed through a DBSession instance
-    Base.metadata.bind = engine
+    db = {'drivername': 'mysql+mysqldb',
+          'host': 'localhost',
+          'port': '3306',
+          'username': argv[1],
+          'password': argv[2],
+          'database': argv[3]}
 
-    DBSession = sessionmaker(bind=engine)
-    # Create a session
-    session = DBSession()
+    url = URL(**db)
+    engine = create_engine(url, pool_pre_ping=True)
+    Base.metadata.create_all(engine)
 
-    # Query all cities joined with their states, ordered by city.id
-    cities = session.query(City, State).join(State).order_by(City.id).all()
-
-    # Iterate and print city and state data
-    for city, state in cities:
+    session = Session(engine)
+    for state, city in session.query(State, City)\
+                              .filter(State.id == City.state_id).all():
         print("{}: ({}) {}".format(state.name, city.id, city.name))
-
     session.close()

@@ -1,9 +1,14 @@
 #!/usr/bin/python3
-"""Sends a request to a URL and displays the value of the X-Request-Id variable."""
+"""
+Module: 1-hbtn_header
+Takes a URL as input, sends a request to it using urllib, and displays the value of a specific header from the response.
+"""
+
 import urllib.request
 import sys
 
-url = sys.argv[1]
-
-with urllib.request.urlopen(url) as response:
-    print(response.headers.get('X-Request-Id'))
+if __name__ == "__main__":
+    url = sys.argv[1]
+    req = urllib.request.Request(url)
+    with urllib.request.urlopen(req) as response:
+        print(response.info().get('X-Request-Id'))

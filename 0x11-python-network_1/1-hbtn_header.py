@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-Module: 1-hbtn_header
-Takes a URL as input, sends a request to it using urllib, and displays the value of a specific header from the response.
+Takes a URL as input, sends a request to it using urllib,
+and displays the value of a specific header from the response.
 """
 
 import urllib.request
